@@ -441,8 +441,8 @@ function OrionLib:Init()
 			if isfile(OrionLib.Folder .. "/" .. game.GameId .. ".txt") then
 				LoadCfg(readfile(OrionLib.Folder .. "/" .. game.GameId .. ".txt"))
 				OrionLib:MakeNotification({
-					Name = "Configuration",
-					Content = "Auto-loaded configuration for the game " .. game.GameId .. ".",
+					Name = "Configuração",
+					Content = "Configuração Carregada" .. game.GameId .. ".",
 					Time = 5
 				})
 			end
@@ -674,9 +674,9 @@ function OrionLib:MakeWindow(WindowConfig)
         MainWindow.Visible = true  -- Defina a interface principal como visível imediatamente
     end
 
-	if WindowConfig.IntroEnabled then
-		LoadSequence()
-	end	
+    if false then
+        LoadSequence()
+    end
 
 	local TabFunction = {}
 	function TabFunction:MakeTab(TabConfig)
