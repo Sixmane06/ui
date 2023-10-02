@@ -462,7 +462,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	WindowConfig.SaveConfig = WindowConfig.SaveConfig or false
 	WindowConfig.HidePremium = WindowConfig.HidePremium or false
 	if WindowConfig.IntroEnabled == nil then
-		WindowConfig.IntroEnabled = true
+		WindowConfig.IntroEnabled = false
 	end
 	WindowConfig.IntroText = WindowConfig.IntroText or "SkyLand HUB"
 	WindowConfig.CloseCallback = WindowConfig.CloseCallback or function() end
@@ -674,9 +674,9 @@ function OrionLib:MakeWindow(WindowConfig)
         MainWindow.Visible = true  -- Defina a interface principal como visível imediatamente
     end
 
-    if false then
-        LoadSequence()
-    end
+	if WindowConfig.IntroEnabled then
+		LoadSequence()
+	end	
 
 	local TabFunction = {}
 	function TabFunction:MakeTab(TabConfig)
