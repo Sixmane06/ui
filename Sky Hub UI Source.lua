@@ -451,29 +451,32 @@ function OrionLib:Init()
 end	
 
 function OrionLib:MakeWindow(WindowConfig)
-    local FirstTab = true
-    local Minimized = false
-    local Loaded = false
-    local UIHidden = false
+	local FirstTab = true
+	local Minimized = false
+	local Loaded = false
+	local UIHidden = false
 
-    WindowConfig = WindowConfig or {}
-    WindowConfig.Name = WindowConfig.Name or "Orion Library"
-    WindowConfig.ConfigFolder = WindowConfig.ConfigFolder or WindowConfig.Name
-    WindowConfig.SaveConfig = WindowConfig.SaveConfig or false
-    WindowConfig.HidePremium = WindowConfig.HidePremium or false
-    WindowConfig.IntroEnabled = false  -- Desativar a animação de introdução
-    WindowConfig.CloseCallback = WindowConfig.CloseCallback or function() end
-    WindowConfig.ShowIcon = WindowConfig.ShowIcon or false
-    WindowConfig.Icon = WindowConfig.Icon or "rbxassetid://14225431628"
-    WindowConfig.IntroIcon = WindowConfig.IntroIcon or "rbxassetid://14225431628"
-    OrionLib.Folder = WindowConfig.ConfigFolder
-    OrionLib.SaveCfg = WindowConfig.SaveConfig
+	WindowConfig = WindowConfig or {}
+	WindowConfig.Name = WindowConfig.Name or "Orion Library"
+	WindowConfig.ConfigFolder = WindowConfig.ConfigFolder or WindowConfig.Name
+	WindowConfig.SaveConfig = WindowConfig.SaveConfig or false
+	WindowConfig.HidePremium = WindowConfig.HidePremium or false
+	if WindowConfig.IntroEnabled == nil then
+		WindowConfig.IntroEnabled = true
+	end
+	WindowConfig.IntroText = WindowConfig.IntroText or "SkyLand HUB"
+	WindowConfig.CloseCallback = WindowConfig.CloseCallback or function() end
+	WindowConfig.ShowIcon = WindowConfig.ShowIcon or false
+	WindowConfig.Icon = WindowConfig.Icon or "rbxassetid://14225431628"
+	WindowConfig.IntroIcon = WindowConfig.IntroIcon or "rbxassetid://14225431628"
+	OrionLib.Folder = WindowConfig.ConfigFolder
+	OrionLib.SaveCfg = WindowConfig.SaveConfig
 
-    if WindowConfig.SaveConfig then
-        if not isfolder(WindowConfig.ConfigFolder) then
-            makefolder(WindowConfig.ConfigFolder)
-        end
-    end
+	if WindowConfig.SaveConfig then
+		if not isfolder(WindowConfig.ConfigFolder) then
+			makefolder(WindowConfig.ConfigFolder)
+		end	
+	end
 
 	local TabHolder = AddThemeObject(SetChildren(SetProps(MakeElement("ScrollFrame", Color3.fromRGB(255, 255, 255), 4), {
 		Size = UDim2.new(1, 0, 1, -50)
@@ -668,37 +671,8 @@ function OrionLib:MakeWindow(WindowConfig)
 	end)
 
 	local function LoadSequence()
-		MainWindow.Visible = false
-		local LoadSequenceLogo = SetProps(MakeElement("Image", WindowConfig.IntroIcon), {
-			Parent = Orion,
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.new(0.5, 0, 0.4, 0),
-			Size = UDim2.new(0, 28, 0, 28),
-			ImageColor3 = Color3.fromRGB(255, 255, 255),
-			ImageTransparency = 1
-		})
-
-		local LoadSequenceText = SetProps(MakeElement("Label", WindowConfig.IntroText, 14), {
-			Parent = Orion,
-			Size = UDim2.new(1, 0, 1, 0),
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.new(0.5, 19, 0.5, 0),
-			TextXAlignment = Enum.TextXAlignment.Center,
-			Font = Enum.Font.GothamBold,
-			TextTransparency = 1
-		})
-
-		TweenService:Create(LoadSequenceLogo, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageTransparency = 0, Position = UDim2.new(0.5, 0, 0.5, 0)}):Play()
-		wait(0.8)
-		TweenService:Create(LoadSequenceLogo, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, -(LoadSequenceText.TextBounds.X/2), 0.5, 0)}):Play()
-		wait(0.3)
-		TweenService:Create(LoadSequenceText, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0}):Play()
-		wait(2)
-		TweenService:Create(LoadSequenceText, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 1}):Play()
-		MainWindow.Visible = true
-		LoadSequenceLogo:Destroy()
-		LoadSequenceText:Destroy()
-	end 
+        MainWindow.Visible = true  -- Defina a interface principal como visível imediatamente
+    end
 
 	if WindowConfig.IntroEnabled then
 		LoadSequence()
